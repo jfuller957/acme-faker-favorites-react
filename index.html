@@ -17,8 +17,41 @@
   <script>
 
     const { render } = ReactDOM;
-    const { createElement } = React;
+    const { createElement, Component } = React;
     const root = document.querySelector('#root');
+
+    class App extends Component{
+      constructor() {
+        super();
+        const arrayMethods = [
+          {id: 1, card: faker.helpers.createCard()},
+          {id: 2, card: faker.helpers.createCard()},
+          {id: 3, card: faker.helpers.createCard()}
+        ];
+        this.state = {
+          arrayMethods
+        };
+      }
+
+      render() {
+        const arrayMethods = this.state.arrayMethods;
+        const lis = arrayMethods.map( arrayMethod => createElement(
+          'li', {
+            key: arrayMethod.id,
+            // className: arrayMethod.isFavorite ? 'favorited': '',
+            // onClick: ()=> toggle(arrayMethod)
+          },
+          arrayMethod.card.name)
+        );
+        const ul = createElement('ul', null, lis);
+
+        return createElement('div', null, ul);
+
+      }
+    }
+
+    render(createElement(App), root);
+
 
 
 
